@@ -1,2 +1,3 @@
 # PySlope
-Testeo de la libreria Pyslope
+Testeo de la libreria Pyslope ¡
+Varios ejemplos 
