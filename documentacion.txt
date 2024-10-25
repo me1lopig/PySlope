@@ -1,0 +1,1 @@
+https://pyslope.readthedocs.io/en/latest/docstrings.html
