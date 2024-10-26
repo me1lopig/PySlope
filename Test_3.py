@@ -3,7 +3,7 @@
 import pyslope as sp
 
 
-s = sp.Slope(height=1, angle=None, length=1)
+s = sp.Slope(height=3, angle=30, length=None)
 
 m1 = sp.Material(20, 35, 0, 0.5)
 m2 = sp.Material(20, 35, 0, 1)
@@ -20,7 +20,7 @@ for r in range(2, 6):
         radius=r,
     )
 
-slices = [10, 25, 50, 500, 2000]
+slices = [10, 25, 50, 500]
 
 for i in slices:
 
