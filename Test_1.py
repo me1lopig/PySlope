@@ -22,7 +22,7 @@ s.set_materials(m1, m2)
 
 
 # analisys
-s.set_analysis_limits(s.get_top_coordinates()[0] - 5, s.get_bottom_coordinates()[0] + 5) # limits
+s.set_analysis_limits(s.get_top_coordinates()[0] - 10, s.get_bottom_coordinates()[0] + 10) # limits
 
 s.update_analysis_options(
     slices=50,
@@ -32,7 +32,7 @@ s.update_analysis_options(
 )
 
 
-#s.analyse_slope() # aqui se produce el error
+.analyse_slope() # aqui se produce el error
 
 #print(s.get_min_FOS())
 
