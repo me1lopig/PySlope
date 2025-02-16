@@ -32,7 +32,7 @@ s.update_analysis_options(
 )
 
 
-.analyse_slope() # aqui se produce el error
+s.analyse_slope() # aqui se produce el error
 
 #print(s.get_min_FOS())
 
