@@ -1,1 +1,3 @@
 https://pyslope.readthedocs.io/en/latest/docstrings.html
+
+testeo con Geostudio 2002
