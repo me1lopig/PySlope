@@ -1,0 +1,2 @@
+# ejecucion de un archivo
+python -m streamlit run test_8.py
