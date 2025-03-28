@@ -19,6 +19,9 @@ def main():
     cohesion = st.number_input("Cohesión (kPa)", min_value=0.0, value=10.0)
     depth_to_bottom = st.number_input("Profundidad del suelo (m)", min_value=0.0, value=height*2)
 
+    #Profundidad del nivel freático
+    nivel_freatico = st.number_input("Profundidad del nf (m)", min_value=0.0,max_value=height, value=height*0.5)
+
     # Advertencia si la profundidad del suelo es menor que 1.5 veces la altura del talud
     if depth_to_bottom < 2 * height:
         st.warning("Advertencia: La profundidad del suelo debe ser al menos 2 veces la altura del talud para obtener resultados precisos.")
@@ -39,6 +42,9 @@ def main():
 
         # Asignar el material al talud
         slope.set_materials(material)
+
+        # Asignar el nivel freático
+        slope.set_water_table(nivel_freatico)  # Profundidad del nivel freático desde la cabeza del talud
 
         # Analizar el talud
         slope.analyse_slope()
