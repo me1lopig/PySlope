@@ -38,7 +38,8 @@ def main():
             friction_angle=friction_angle,
             cohesion=cohesion,
             depth_to_bottom=depth_to_bottom,
-            name="UG-01"
+            name="UG-01",
+            color='blue'
         )
 
         # Asignar el material al talud
