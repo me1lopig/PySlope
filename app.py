@@ -11,6 +11,9 @@ def main():
     st.header("Parámetros del Talud")
     height = st.number_input("Altura del talud (m)", min_value=0.0, value=5.0)
     angle = st.number_input("Ángulo del talud (grados)", min_value=0.0, max_value=90.0, value=45.0)
+    
+    #Profundidad del nivel freático
+    nivel_freatico = st.number_input("Profundidad del nf (m)", min_value=0.0,max_value=height, value=height*0.5)
 
     # Entradas para los parámetros del suelo
     st.header("Parámetros del Suelo")
@@ -19,8 +22,6 @@ def main():
     cohesion = st.number_input("Cohesión (kPa)", min_value=0.0, value=10.0)
     depth_to_bottom = st.number_input("Profundidad del suelo (m)", min_value=0.0, value=height*2)
 
-    #Profundidad del nivel freático
-    nivel_freatico = st.number_input("Profundidad del nf (m)", min_value=0.0,max_value=height, value=height*0.5)
 
     # Advertencia si la profundidad del suelo es menor que 1.5 veces la altura del talud
     if depth_to_bottom < 2 * height:
