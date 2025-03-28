@@ -5,7 +5,7 @@ import plotly.graph_objects as go
 
 def main():
     # Configuración de la página
-    st.title("Análisis de Estabilidad de Taludes mediante el Método de Bishop Simplificado")
+    st.title("Análisis de Estabilidad de Taludes mediante el Método de Bishop Simplificado para uso académico")
 
     # Entradas para los parámetros del talud
     st.header("Parámetros del Talud")
