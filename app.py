@@ -39,7 +39,7 @@ def main():
             cohesion=cohesion,
             depth_to_bottom=depth_to_bottom,
             name="UG-01",
-            color='blue'
+            color='green'
         )
 
         # Asignar el material al talud
