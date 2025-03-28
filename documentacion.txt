@@ -1,3 +1,4 @@
 https://pyslope.readthedocs.io/en/latest/docstrings.html
 
 testeo con Geostudio 2002
+creaccion de una app en formato web
