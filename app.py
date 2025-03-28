@@ -17,15 +17,15 @@ def main():
 
     # Entradas para los parámetros del suelo
     st.header("Parámetros del Suelo")
-    unit_weight = st.number_input("Peso unitario (kN/m³)", min_value=0.0, value=20.0)
+    unit_weight = st.number_input("Peso aparente (kN/m³)", min_value=0.0, value=20.0)
     friction_angle = st.number_input("Ángulo de fricción (grados)", min_value=0.0, max_value=90.0, value=30.0)
     cohesion = st.number_input("Cohesión (kPa)", min_value=0.0, value=10.0)
-    depth_to_bottom = st.number_input("Profundidad del suelo (m)", min_value=0.0, value=height*2)
+    depth_to_bottom = st.number_input("Espesor del suelo (m)", min_value=height*1.5, value=height*2)
 
 
     # Advertencia si la profundidad del suelo es menor que 1.5 veces la altura del talud
-    if depth_to_bottom < 2 * height:
-        st.warning("Advertencia: La profundidad del suelo debe ser al menos 2 veces la altura del talud para obtener resultados precisos.")
+    if depth_to_bottom < 1.5 * height:
+        st.warning("Advertencia: La profundidad del suelo debe ser al menos 1.5 veces la altura del talud para obtener resultados precisos.")
 
     # Botón para calcular
     if st.button("Calcular"):
