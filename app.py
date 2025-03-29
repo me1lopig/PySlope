@@ -13,7 +13,7 @@ def main():
     angle = st.number_input("Ángulo del talud (grados)", min_value=0.0, max_value=90.0, value=45.0)
     
     #Profundidad del nivel freático
-    nivel_freatico = st.number_input("Profundidad del nf (m) desde coronación", min_value=0.0,max_value=height, value=height*0.5)
+    nivel_freatico = st.number_input("Profundidad del nf (m) desde coronación", min_value=0.0, value=height*0.5)
 
     # Entradas para los parámetros del suelo
     st.header("Parámetros del Suelo")
