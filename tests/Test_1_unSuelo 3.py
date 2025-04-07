@@ -14,15 +14,14 @@ def main():
 
     # bucle de cálculo
     for altura in np.arange(2,16):
+        altura=float(altura)
         for pendiente in np.arange(10,91):
+            pendiente=float(pendiente)
             for pesoEspecifico in np.arange(14,21):
+                pesoEspecifico=float(pesoEspecifico)
                 for cohesionTerreno in np.arange(0,51):
+                    cohesion=float(cohesion)
                     for anguloRozamiento in np.arange(5,41):
-
-                        altura=float(altura)
-                        pendiente=float(pendiente)
-                        pesoEspecifico=float(pesoEspecifico)
-                        cohesionTerreno=float(cohesionTerreno)
                         anguloRozamiento=float(anguloRozamiento)
 
                         s = psp.Slope(height=altura, angle=pendiente, length=None)
