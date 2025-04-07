@@ -13,15 +13,15 @@ def main():
     hoja.append(["Altura [m]","Pendiente [º]","Peso Especifico [kN/m3]","Cohesión [kPa]", "fi [º]", "FS"])  
 
     # bucle de cálculo
-    for altura in np.arange(2,16):
+    for altura in np.arange(2,16,2):
         altura=float(altura)
-        for pendiente in np.arange(10,91):
+        for pendiente in np.arange(10,91,5):
             pendiente=float(pendiente)
             for pesoEspecifico in np.arange(14,21):
                 pesoEspecifico=float(pesoEspecifico)
-                for cohesionTerreno in np.arange(0,51):
+                for cohesionTerreno in np.arange(0,51,5):
                     cohesion=float(cohesion)
-                    for anguloRozamiento in np.arange(5,41):
+                    for anguloRozamiento in np.arange(5,41,5):
                         anguloRozamiento=float(anguloRozamiento)
 
                         s = psp.Slope(height=altura, angle=pendiente, length=None)
