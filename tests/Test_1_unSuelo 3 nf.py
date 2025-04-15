@@ -11,7 +11,7 @@ def main():
     # Creación de la hoja excel en la que volcar los datos
     wb = openpyxl.Workbook()
     hoja = wb.active
-    hoja.append(["Altura [m]","Pendiente [º]","Peso Especifico [kN/m3]","Cohesión [kPa]", "fi [º]", "FS"])  
+    hoja.append(["Altura [m]","nf [m]","Pendiente [º]","Peso Especifico [kN/m3]","Cohesión [kPa]", "fi [º]", "FS"])  
 
     # bucle de cálculo
     for altura in np.arange(2,16,2):
@@ -60,7 +60,7 @@ def main():
 
                         # guardado en excel de los resultados de los calculos de una matriz de datos
        
-                            hoja.append([altura,pendiente,pesoEspecifico,cohesionTerreno,anguloRozamiento, s.get_min_FOS()])  
+                            hoja.append([altura,nf,pendiente,pesoEspecifico,cohesionTerreno,anguloRozamiento, s.get_min_FOS()])  
 
     # Guardar el archivo Excel  
     nombre_archivo = 'analisis_talud.xlsx'  
