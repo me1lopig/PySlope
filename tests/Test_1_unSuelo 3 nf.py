@@ -16,7 +16,7 @@ def main():
     # bucle de cálculo
     for altura in np.arange(2,16,2):
         altura=float(altura)
-        for nf in np.arange(0,altura+altura*0.25,0.5):
+        for nf in np.arange(0,altura+altura*0.10,0.5):
             for pendiente in np.arange(10,91,5):
                 pendiente=float(pendiente)
                 for pesoEspecifico in np.arange(14,21):
