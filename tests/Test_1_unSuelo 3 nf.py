@@ -1,4 +1,5 @@
-# Prueba de la libreria pyslope
+# Obtencion de una hoja excel con los FS para varias variables 
+# inclido el Nivel freático
 
 import pyslope as psp
 import numpy as np
