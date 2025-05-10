@@ -1,5 +1,7 @@
 # Obtencion de una hoja excel con los FS para varias variables 
 # inclido el Nivel freático
+# se considera otro material bajo el nivel freático para simular el terreno saturado
+# m1 material por encima del nf y m2 el material situado por debajo de este 
 
 import pyslope as psp
 import numpy as np
@@ -36,12 +38,21 @@ def main():
                                 unit_weight=pesoEspecifico,
                                 friction_angle=anguloRozamiento,
                                 cohesion=cohesionTerreno,
-                                depth_to_bottom=altura*2,
+                                depth_to_bottom=float(nf),
                                 name="Unidad 1"
-                            )   
+                            )
+
+                            m2 = psp.Material(
+                                unit_weight=pesoEspecifico,
+                                friction_angle=anguloRozamiento,
+                                cohesion=cohesionTerreno,
+                                name="Unidad Saturada"
+                            )
+
+
 
                             # Asignación del material
-                            s.set_materials(m1)
+                            s.set_materials(m1,m2)
 
                             # Definir el nivel freático
                             s.set_water_table(nf)  # Profundidad del nivel freático desde la parte superior del talud en metros
