@@ -55,11 +55,12 @@ def main():
 
                     # guardado en excel de los resultados de los calculos de una matriz de datos
        
-                        hoja.append([altura,pendiente,pesoEspecifico,cohesionTerreno,anguloRozamiento, s.get_min_FOS()])  
+                        hoja.append([altura,pendiente,pesoEspecifico,cohesionTerreno,anguloRozamiento, s.get_min_FOS()])
+                        # Guardar el archivo Excel  
+                        nombre_archivo = 'analisis_talud.xlsx'  
+                        wb.save(nombre_archivo)  
 
-    # Guardar el archivo Excel  
-    nombre_archivo = 'analisis_talud.xlsx'  
-    wb.save(nombre_archivo)
+
     
 if __name__ == "__main__":
     main()
