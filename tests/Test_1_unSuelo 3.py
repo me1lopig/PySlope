@@ -60,7 +60,6 @@ def main():
                         nombre_archivo = 'analisis_talud.xlsx'  
                         wb.save(nombre_archivo)  
 
-
     
 if __name__ == "__main__":
     main()
