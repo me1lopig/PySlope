@@ -66,8 +66,14 @@ def main():
                             wb.save(nombre_archivo)  
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 
 <<<<<<< HEAD
+=======
+                            # Guardar el archivo Excel  
+                            nombre_archivo = 'analisis_talud.xlsx'  
+                            wb.save(nombre_archivo)
+>>>>>>> 997f1ca1afc38714cc1cf74098684b24c61d6514
 =======
                             # Guardar el archivo Excel  
                             nombre_archivo = 'analisis_talud.xlsx'  
