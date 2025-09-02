@@ -1,0 +1,5 @@
+> git pull --tags origin main
+error: No es posible hacer pull porque tienes archivos sin fusionar.
+ayuda: Corrígelos en el árbol de trabajo y entonces usa 'git add/rm <archivo>',
+ayuda: como sea apropiado, para marcar la resolución y realizar un commit.
+fatal: Saliendo porque existe un conflicto sin resolver.
