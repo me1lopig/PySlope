@@ -1,4 +1,4 @@
-shiny run --reload app.py
+shiny run --reload app_1.py
 
 
 se accede a la aplicacion con _

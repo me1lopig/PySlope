@@ -86,5 +86,3 @@ def server(input, output, session):
 # Crear la aplicación
 app = App(app_ui, server)
 
-
-
