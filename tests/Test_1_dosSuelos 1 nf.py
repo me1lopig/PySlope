@@ -1,5 +1,7 @@
 # Obtencion de una hoja excel con los FS para varias variables 
 # inclido el Nivel freático
+# se considera otro material bajo el nivel freático para simular el terreno saturado
+# m1 material por encima del nf y m2 el material situado por debajo de este 
 
 import pyslope as psp
 import numpy as np
@@ -14,16 +16,16 @@ def main():
     hoja.append(["Altura [m]","nf [m]","Pendiente [º]","Peso Especifico [kN/m3]","Cohesión [kPa]", "fi [º]", "FS"])  
 
     # bucle de cálculo
-    for altura in np.arange(2,25,2):
+    for altura in np.arange(2,16,2):
         altura=float(altura)
         for nf in np.arange(0,altura+altura*0.10,0.5):
             for pendiente in np.arange(10,91,5):
                 pendiente=float(pendiente)
-                for pesoEspecifico in np.arange(12,23):
+                for pesoEspecifico in np.arange(14,21):
                     pesoEspecifico=float(pesoEspecifico)
-                    for cohesionTerreno in np.arange(1,51,5):
+                    for cohesionTerreno in np.arange(0,51,5):
                         cohesionTerreno=float(cohesionTerreno)
-                        for anguloRozamiento in np.arange(1,41,2):
+                        for anguloRozamiento in np.arange(5,41,5):
                             anguloRozamiento=float(anguloRozamiento)
 
                             s = psp.Slope(height=altura, angle=pendiente, length=None)
@@ -36,12 +38,21 @@ def main():
                                 unit_weight=pesoEspecifico,
                                 friction_angle=anguloRozamiento,
                                 cohesion=cohesionTerreno,
-                                depth_to_bottom=altura*2,
+                                depth_to_bottom=float(nf),
                                 name="Unidad 1"
-                            )   
+                            )
+
+                            m2 = psp.Material(
+                                unit_weight=pesoEspecifico,
+                                friction_angle=anguloRozamiento,
+                                cohesion=cohesionTerreno,
+                                name="Unidad Saturada"
+                            )
+
+
 
                             # Asignación del material
-                            s.set_materials(m1)
+                            s.set_materials(m1,m2)
 
                             # Definir el nivel freático
                             s.set_water_table(nf)  # Profundidad del nivel freático desde la parte superior del talud en metros
@@ -60,12 +71,11 @@ def main():
 
                         # guardado en excel de los resultados de los calculos de una matriz de datos
        
-                            hoja.append([altura,nf,pendiente,pesoEspecifico,cohesionTerreno,anguloRozamiento, s.get_min_FOS()])
-                                # Guardar el archivo Excel  
-                            nombre_archivo = 'analisis_talud2.xlsx'  
-                            wb.save(nombre_archivo)  
+                            hoja.append([altura,nf,pendiente,pesoEspecifico,cohesionTerreno,anguloRozamiento, s.get_min_FOS()])  
 
-
+                            # Guardar el archivo Excel  
+                            nombre_archivo = 'analisis_talud.xlsx'  
+                            wb.save(nombre_archivo)
     
 if __name__ == "__main__":
     main()

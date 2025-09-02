@@ -19,9 +19,9 @@ def main():
         for nf in np.arange(0,altura+altura*0.10,0.5):
             for pendiente in np.arange(10,91,5):
                 pendiente=float(pendiente)
-                for pesoEspecifico in np.arange(12,23):
+                for pesoEspecifico in np.arange(14,25):
                     pesoEspecifico=float(pesoEspecifico)
-                    for cohesionTerreno in np.arange(1,51,5):
+                    for cohesionTerreno in np.arange(5,51,5):
                         cohesionTerreno=float(cohesionTerreno)
                         for anguloRozamiento in np.arange(1,41,2):
                             anguloRozamiento=float(anguloRozamiento)
@@ -30,18 +30,26 @@ def main():
 
                             psp.Slope.plot_boundary(s, material_table=True, legend=True)
         
-                            # Características del material
+                            # Características de los materiales
 
                             m1 = psp.Material(
                                 unit_weight=pesoEspecifico,
                                 friction_angle=anguloRozamiento,
                                 cohesion=cohesionTerreno,
-                                depth_to_bottom=altura*2,
+                                depth_to_bottom=int(nf),
                                 name="Unidad 1"
-                            )   
+                            )
+
+                            m2 = psp.Material(
+                                unit_weight=pesoEspecifico+2,
+                                friction_angle=anguloRozamiento,
+                                cohesion=cohesionTerreno,
+                                depth_to_bottom=altura*2-int(nf),
+                                name="Unidad 2"
+                            ) 
 
                             # Asignación del material
-                            s.set_materials(m1)
+                            s.set_materials(m1,m2)
 
                             # Definir el nivel freático
                             s.set_water_table(nf)  # Profundidad del nivel freático desde la parte superior del talud en metros
@@ -61,7 +69,7 @@ def main():
                         # guardado en excel de los resultados de los calculos de una matriz de datos
        
                             hoja.append([altura,nf,pendiente,pesoEspecifico,cohesionTerreno,anguloRozamiento, s.get_min_FOS()])
-                                # Guardar el archivo Excel  
+                            # Guardar el archivo Excel  
                             nombre_archivo = 'analisis_talud2.xlsx'  
                             wb.save(nombre_archivo)  
 
