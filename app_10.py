@@ -11,7 +11,7 @@ from docx.enum.text import WD_ALIGN_PARAGRAPH
 # ==========================================
 # 1. CONFIGURACIÓN
 # ==========================================
-st.set_page_config(page_title="Análisis Pyslope Pro", layout="wide")
+st.set_page_config(page_title="Análisis de Estabilidad de Taludes por el Método de Bishop Simplificado", layout="wide")
 
 # Diccionario de traducción de colores
 MAPA_COLORES = {
