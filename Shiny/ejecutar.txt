@@ -1,5 +1,0 @@
-shiny run --reload app_1.py
-
-
-se accede a la aplicacion con _
-http://127.0.0.1:8000
