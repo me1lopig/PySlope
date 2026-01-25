@@ -93,7 +93,7 @@ def generar_reporte(height, angle, nf, tabla_suelos, fos, fig_plotly):
     return buffer
 
 def main():
-    st.title("⛰️ Análisis de Estabilidad Pro")
+    st.title("⛰️ Análisis de Estabilidad de Taludes mediante el Método de Bishop Simplificado")
 
     # ==========================================
     # ENTRADAS
@@ -103,7 +103,7 @@ def main():
         height = st.number_input("Altura Talud (m)", 1.0, 50.0, 6.0, step=0.5)
         angle = st.number_input("Ángulo (°)", 10.0, 89.0, 45.0, step=1.0)
         st.divider()
-        st.header("2. Agua")
+        st.header("2. Nivel Freático")
         nf_prof = st.number_input("Profundidad NF (m)", 0.0, 20.0, 3.0, step=0.5)
         
         st.divider()
@@ -112,7 +112,7 @@ def main():
         ancho_fig = c1.number_input("Ancho (px)", 300, 2000, 800, step=50)
         alto_fig = c2.number_input("Alto (px)", 300, 2000, 600, step=50)
         
-        usar_limites = st.checkbox("Forzar límites manuales", value=False)
+        usar_limites = st.checkbox("Forzar límites manuales (experimental)", value=False)
         if usar_limites:
             c3, c4 = st.columns(2)
             x_min = c3.number_input("X Mín", value=0.0, step=1.0)
@@ -126,7 +126,7 @@ def main():
     # TABLA DE MATERIALES
     with st.expander("📝 Editar Capas y Colores (Potencia)", expanded=True):
         df_base = pd.DataFrame([
-            {"Material": "Relleno", "γ": 18.0, "c": 5.0, "φ": 28.0, "Potencia": 5.0, "Color": "Rojizo"},
+            {"Material": "Relleno", "γ": 18.0, "c": 5.0, "φ": 18.0, "Potencia": 5.0, "Color": "Rojizo"},
             {"Material": "Arcilla", "γ": 20.0, "c": 25.0, "φ": 22.0, "Potencia": 7.0, "Color": "Amarillo arena"},
         ])
         
@@ -156,10 +156,10 @@ def main():
             slope = Slope(height=height, angle=angle, length=None)
             
             # --- 1. APLICAR PARÁMETROS FIJOS ---
-            # Se usan los valores robustos que acordamos
+            # Parámetros estándar Pyslope modificales sólo en el código
             slope.update_analysis_options(
-                slices=50,          # Estándar robusto
-                iterations=2000,    # Búsqueda exhaustiva
+                slices=50,          
+                iterations=2000,    
                 tolerance=0.005,
                 max_iterations=50
             )
@@ -202,7 +202,7 @@ def main():
                 fig.update_yaxes(scaleanchor="x", scaleratio=1, title="Elevación (m)")
                 fig.update_xaxes(title="Distancia (m)")
 
-            # --- 5. RESULTADOS Y REPORTE ---
+            # --- 5. RESULTADOS E INFORME ---
             st.divider()
             col_res1, col_res2 = st.columns([1, 3])
             
