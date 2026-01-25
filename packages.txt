@@ -1,5 +1,0 @@
-streamlit
-pyslope
-plotly
-pandas
-python-docx
