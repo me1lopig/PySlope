@@ -11,7 +11,7 @@ from docx.enum.text import WD_ALIGN_PARAGRAPH
 # ==========================================
 # 1. CONFIGURACIÓN
 # ==========================================
-st.set_page_config(page_title="Análisis de Estabilidad de Taludes por el Método de Bishop Simplificado", layout="wide")
+st.set_page_config(page_title="Análisis Estabilidad mediante el Método de Bishop Simplificado", layout="wide")
 
 # Diccionario de traducción de colores
 MAPA_COLORES = {
@@ -40,13 +40,12 @@ def generar_reporte(height, angle, nf, tabla_suelos, fos, fig_plotly):
     p.add_run(f'• Ángulo: {angle}°\n').bold = True
     p.add_run(f'• Nivel Freático: {nf} m').bold = True
 
-    # 2. Parámetros de Cálculo (FIJOS)
+    # 2. Parámetros de Cálculo
     doc.add_heading('2. Parámetros de Cálculo', level=1)
     p2 = doc.add_paragraph()
     p2.add_run("• Método: Bishop Simplificado\n")
-    p2.add_run("• Dovelas (Slices): 50 (Estándar)\n")
-    p2.add_run("• Iteraciones de Búsqueda: 2000\n")
-    p2.add_run("• Tolerancia: 0.005")
+    p2.add_run("• Dovelas (Slices): 50\n")
+    p2.add_run("• Iteraciones: 2000")
 
     # 3. Suelos
     doc.add_heading('3. Estratigrafía', level=1)
@@ -70,17 +69,14 @@ def generar_reporte(height, angle, nf, tabla_suelos, fos, fig_plotly):
     # 4. Resultados
     doc.add_heading('4. Resultados', level=1)
     p_res = doc.add_paragraph()
-    run_res = p_res.add_run(f'Factor de Seguridad (FOS): {fos:.3f}')
+    run_res = p_res.add_run(f'Factor de Seguridad (FS): {fos:.3f}')
     run_res.bold = True
     run_res.font.size = Pt(14)
     run_res.font.color.rgb = RGBColor(220, 20, 60)
 
-    if fos < 1.0: doc.add_paragraph('ESTADO: FALLA').bold = True
-    elif fos < 1.5: doc.add_paragraph('ESTADO: CONDICIONAL')
-    else: doc.add_paragraph('ESTADO: ESTABLE')
 
     # 5. Imagen
-    doc.add_heading('5. Gráfico de Falla', level=1)
+    doc.add_heading('5. Gráfico de Estabilidad', level=1)
     try:
         img_bytes = fig_plotly.to_image(format="png", width=800, height=600, scale=1.5)
         doc.add_picture(io.BytesIO(img_bytes), width=Inches(6))
@@ -93,7 +89,7 @@ def generar_reporte(height, angle, nf, tabla_suelos, fos, fig_plotly):
     return buffer
 
 def main():
-    st.title("⛰️ Análisis de Estabilidad de Taludes mediante el Método de Bishop Simplificado")
+    st.title("⛰️ Análisis de Estabilidad mediante el Método de Bishop Simplificado")
 
     # ==========================================
     # ENTRADAS
@@ -103,7 +99,7 @@ def main():
         height = st.number_input("Altura Talud (m)", 1.0, 50.0, 6.0, step=0.5)
         angle = st.number_input("Ángulo (°)", 10.0, 89.0, 45.0, step=1.0)
         st.divider()
-        st.header("2. Nivel Freático")
+        st.header("2. Agua")
         nf_prof = st.number_input("Profundidad NF (m)", 0.0, 20.0, 3.0, step=0.5)
         
         st.divider()
@@ -112,7 +108,7 @@ def main():
         ancho_fig = c1.number_input("Ancho (px)", 300, 2000, 800, step=50)
         alto_fig = c2.number_input("Alto (px)", 300, 2000, 600, step=50)
         
-        usar_limites = st.checkbox("Forzar límites manuales (experimental)", value=False)
+        usar_limites = st.checkbox("Forzar límites manuales (cuidado con los valores)", value=False)
         if usar_limites:
             c3, c4 = st.columns(2)
             x_min = c3.number_input("X Mín", value=0.0, step=1.0)
@@ -123,19 +119,20 @@ def main():
         else:
             x_min, x_max, y_min, y_max = None, None, None, None
 
-    # TABLA DE MATERIALES
+    # TABLA DE MATERIALES (CORREGIDA)
     with st.expander("📝 Editar Capas y Colores (Potencia)", expanded=True):
         df_base = pd.DataFrame([
-            {"Material": "Relleno", "γ": 18.0, "c": 5.0, "φ": 18.0, "Potencia": 5.0, "Color": "Rojizo"},
+            {"Material": "Relleno", "γ": 18.0, "c": 5.0, "φ": 28.0, "Potencia": 5.0, "Color": "Rojizo"},
             {"Material": "Arcilla", "γ": 20.0, "c": 25.0, "φ": 22.0, "Potencia": 7.0, "Color": "Amarillo arena"},
         ])
         
         tabla = st.data_editor(
             df_base, num_rows="dynamic", use_container_width=True,
             column_config={
-                "γ": st.column_config.NumberColumn(format="%.1f"),
-                "c": st.column_config.NumberColumn(format="%.1f"),
-                "φ": st.column_config.NumberColumn(format="%.1f"),
+                # AQUI ESTÁ LA CORRECCIÓN: AÑADIMOS EL TÍTULO CON UNIDADES
+                "γ": st.column_config.NumberColumn("Peso (kN/m³)", format="%.1f", width="small"),
+                "c": st.column_config.NumberColumn("Cohesión (kPa)", format="%.1f", width="small"),
+                "φ": st.column_config.NumberColumn("Fricción (°)", format="%.1f", width="small"),
                 "Potencia": st.column_config.NumberColumn("Potencia (m)", format="%.2f", min_value=0.1),
                 "Color": st.column_config.SelectboxColumn(options=list(MAPA_COLORES.keys()), required=True)
             }
@@ -144,10 +141,8 @@ def main():
     # ==========================================
     # CÁLCULO
     # ==========================================
-    
-    # AVISO DE PARÁMETROS FIJOS
     st.markdown("---")
-    st.caption("ℹ️ **Nota Técnica:** El cálculo se realizará utilizando **50 dovelas** y **2000 iteraciones** (Parámetros Estándar Pyslope).")
+    st.caption("ℹ️ **Nota Técnica:** Cálculo basado en 50 dovelas y 2000 iteraciones (Estándar Pyslope).")
 
     if st.button("Calcular Factor de Seguridad", type="primary"):
         if tabla.empty: st.error("Tabla vacía"); return
@@ -155,16 +150,11 @@ def main():
         try:
             slope = Slope(height=height, angle=angle, length=None)
             
-            # --- 1. APLICAR PARÁMETROS FIJOS ---
-            # Parámetros estándar Pyslope modificales sólo en el código
             slope.update_analysis_options(
-                slices=50,          
-                iterations=2000,    
-                tolerance=0.005,
-                max_iterations=50
+                slices=50, iterations=2000, 
+                tolerance=0.005, max_iterations=50
             )
             
-            # --- 2. MATERIALES ---
             mats = []
             prof_acumulada = 0.0
             for i, row in tabla.iterrows():
@@ -178,13 +168,11 @@ def main():
             slope.set_materials(*mats)
             slope.set_water_table(nf_prof)
             
-            # --- 3. EJECUTAR ---
             with st.spinner(f"Analizando estabilidad..."):
                 slope.analyse_slope()
                 fos = slope.get_min_FOS()
                 fig = slope.plot_critical()
 
-            # --- 4. VISUALIZACIÓN ---
             fig.layout.annotations = [] 
             fig.layout.shapes = []      
             
@@ -202,21 +190,20 @@ def main():
                 fig.update_yaxes(scaleanchor="x", scaleratio=1, title="Elevación (m)")
                 fig.update_xaxes(title="Distancia (m)")
 
-            # --- 5. RESULTADOS E INFORME ---
             st.divider()
             col_res1, col_res2 = st.columns([1, 3])
             
             with col_res1:
-                st.markdown(f"### FOS: :blue[{fos:.3f}]")
+                st.markdown(f"### FS: :blue[{fos:.3f}]")
                 st.success("Cálculo finalizado")
                 
-                with st.spinner("Creando reporte..."):
+                with st.spinner("Creando informe..."):
                     archivo_docx = generar_reporte(height, angle, nf_prof, tabla, fos, fig)
                 
                 st.download_button(
                     label="📄 Descargar Informe Word",
                     data=archivo_docx,
-                    file_name="Reporte_Estabilidad.docx",
+                    file_name="Informe_Estabilidad.docx",
                     mime="application/vnd.openxmlformats-officedocument.wordprocessingml.document",
                     type="primary"
                 )
