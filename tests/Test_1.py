@@ -16,7 +16,7 @@ def main():
     )
 
     # Material defined with positional arguments
-    m2 = psp.Material(20, 30, 2, 3)
+    m2 = psp.Material(20, 30, 2, 7)
 
     # An unlimited number of materials can be assigned at one time
     s.set_materials(m1, m2)
