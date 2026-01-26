@@ -99,7 +99,7 @@ def main():
         height = st.number_input("Altura Talud (m)", 1.0, 50.0, 6.0, step=0.5)
         angle = st.number_input("Ángulo (°)", 10.0, 89.0, 45.0, step=1.0)
         st.divider()
-        st.header("2. Agua")
+        st.header("2. Nivel freático")
         nf_prof = st.number_input("Profundidad NF (m)", 0.0, 20.0, 3.0, step=0.5)
         
         st.divider()
@@ -120,7 +120,7 @@ def main():
             x_min, x_max, y_min, y_max = None, None, None, None
 
     # TABLA DE MATERIALES (CORREGIDA)
-    with st.expander("📝 Editar Capas y Colores (Potencia)", expanded=True):
+    with st.expander("📝 Editar datos de entrada", expanded=True):
         df_base = pd.DataFrame([
             {"Material": "Relleno", "γ": 18.0, "c": 5.0, "φ": 28.0, "Potencia": 5.0, "Color": "Rojizo"},
             {"Material": "Arcilla", "γ": 20.0, "c": 25.0, "φ": 22.0, "Potencia": 7.0, "Color": "Amarillo arena"},
@@ -129,7 +129,7 @@ def main():
         tabla = st.data_editor(
             df_base, num_rows="dynamic", use_container_width=True,
             column_config={
-                # AQUI ESTÁ LA CORRECCIÓN: AÑADIMOS EL TÍTULO CON UNIDADES
+                # Títulos de la entrada de datos
                 "γ": st.column_config.NumberColumn("Peso (kN/m³)", format="%.1f", width="small"),
                 "c": st.column_config.NumberColumn("Cohesión (kPa)", format="%.1f", width="small"),
                 "φ": st.column_config.NumberColumn("Fricción (°)", format="%.1f", width="small"),
@@ -149,7 +149,6 @@ def main():
         
         try:
             slope = Slope(height=height, angle=angle, length=None)
-            
             slope.update_analysis_options(
                 slices=50, iterations=2000, 
                 tolerance=0.005, max_iterations=50
