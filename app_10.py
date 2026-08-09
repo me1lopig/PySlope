@@ -90,7 +90,7 @@ def generar_reporte(height, angle, nf, tabla_suelos, fos, fig_plotly):
 
 def main():
     st.title("⛰️ Análisis de Estabilidad mediante el Método de Bishop Simplificado")
-st.markdown("Para uso académico y testeo")
+    st.markdown("Para uso académico y  testeo")
 
     # ==========================================
     # ENTRADAS
