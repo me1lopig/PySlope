@@ -177,7 +177,7 @@ Se incluyen gráficos con `Plotly` y `Matplotlib` para mostrar:
 - curvas de sensibilidad
 - comportamiento ante cambios del nivel freático
 
-### 4. Emisión de reportes
+### 4. Emisión de informes
 Se genera documentación Word con tablas, cifras y gráficos para presentar análisis de forma técnica.
 
 ---
@@ -229,6 +229,3 @@ Este repositorio está enfocado a desarrollo experimental y pruebas técnicas. L
 
 ---
 
-<p align="center">
-  <strong>⭐ Gracias por visitar PySlope ⭐</strong>
-</p>
